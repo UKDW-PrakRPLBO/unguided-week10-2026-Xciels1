@@ -26,6 +26,26 @@ public class LoginController {
         // ==============================================================================
 
         // --- TULIS KODE ANDA DI BAWAH INI ---
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+
+        UmbrellaDBManager dbManager = new UmbrellaDBManager();
+
+        String namaLengkap = dbManager.validateUser(username, password);
+        if (namaLengkap != null) {
+            UmbrellaApp.loggedInUser = namaLengkap;
+            try {
+                UmbrellaApp.switchScene("umbrella-view.fxml");
+            } catch (Exception err) {
+                err.printStackTrace();
+                lblStatus.setText("SYSTEM ERROR: CANNOT LOAD MAIN TERMINAL");
+            }
+        }  else {
+            lblStatus.setText("AUTHENTICATION FAILED");
+            lblStatus.setStyle("-fx-text-fill: red;");
+
+        }
+
 
 
     }
